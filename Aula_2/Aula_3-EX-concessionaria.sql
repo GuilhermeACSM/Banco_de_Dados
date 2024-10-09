@@ -179,5 +179,5 @@ TRUNCATE TABLE tb_telefone;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
-
+select * from tb_dpClientes left join tb_vendas on (tb_dpClientes.id = tb_clientes.id_dpCliente);
 
