@@ -87,13 +87,13 @@ CREATE TABLE tb_vendas (
 drop table tb_vendas;
 
 -- DESCRIBES DA TABELAS
-describe tb_carros2;
-DESCRIBE tb_clientes;
-describe tb_dpclientes;
-describe tb_endereco;
 describe tb_telefone;
 describe tb_email;
+describe tb_endereco;
+describe tb_dpclientes;
 describe tb_vendedores;
+DESCRIBE tb_clientes;
+describe tb_carros2;
 describe tb_vendas;
 
 -- TB TELEFONE
