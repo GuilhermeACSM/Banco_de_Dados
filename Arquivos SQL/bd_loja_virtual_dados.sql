@@ -77,5 +77,9 @@ INSERT INTO tb_clientes(nome, idade) VALUES
 ('Otávio Martins', 36),
 ('Patrícia Gomes', 30);	
 
+select * from tb_clientes;
+truncate table tb_descricoes_tecnicas;
+select * from tb_descricoes_tecnicas;
+select * from tb_imagens;
 
 

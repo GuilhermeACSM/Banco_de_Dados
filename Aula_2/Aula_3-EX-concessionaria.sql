@@ -58,17 +58,25 @@ CREATE TABLE tb_clientes (
 );
 drop table tb_cliente;
 
+-- TB MARCA
+create table tb_marcas (
+	id int auto_increment primary key,
+	marca varchar(50) not null
+);
+drop table tb_marcas;
+
 -- TB CARRO
 create table tb_carros2 (
 	id int auto_increment primary key,
-	marca varchar(50) not null,
+    id_marca int not null,
 	modelo varchar(100) not null,
 	ano date not null,
 	cor varchar(50) not null,
 	portas varchar(10) not null,
 	placa varchar(15),
 	chassi varchar(17) not null,
-	preco float(9,2) default 0
+	preco float(9,2) default 0,
+    FOREIGN KEY (id_marca) references tb_marcas(id)
 );
 drop table tb_carros2;
 
@@ -78,7 +86,7 @@ CREATE TABLE tb_vendas (
 	id_carro INT NOT NULL,
 	id_vendedor INT NOT NULL,
 	id_cliente INT NOT NULL,
-	data_venda DATE NOT NULL,
+	data_venda DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	valor FLOAT(12,2) NOT NULL,
 	FOREIGN KEY (id_carro) REFERENCES tb_carros2(id),
 	FOREIGN KEY (id_vendedor) REFERENCES tb_vendedores(id),
@@ -93,6 +101,7 @@ describe tb_endereco;
 describe tb_dpclientes;
 describe tb_vendedores;
 DESCRIBE tb_clientes;
+DESCRIBE tb_marcas;
 describe tb_carros2;
 describe tb_vendas;
 
@@ -137,22 +146,30 @@ INSERT INTO tb_vendedores (salario, id_dpCliente) VALUES
 (3500.00, 2);
 select * from tb_vendedores;
 
+-- TB MARCAS
+INSERT INTO tb_marcas(marca) VALUES
+('Corolla'),
+('Honda'),
+('Ford');
+select * from tb_marcas;
+
 -- TB CARROS
-INSERT INTO tb_carros2 (marca, modelo, ano, cor, portas, placa, preco, chassi) VALUES
-('Toyota', 'Corolla', '2020-01-01', 'Prata', '4', 'ABC1D23', 85000.00, '1HGBH41JXMN109186'),
-('Honda', 'Civic', '2019-01-01', 'Preto', '4', 'XYZ4W56', 95000.00, '1HGCM82633A123456'),
-('Ford', 'Fiesta', '2021-01-01', 'Vermelho', '4', 'LMN7O89', 55000.00, '1FADP3F20JL123456');
+INSERT INTO tb_carros2 (id_marca, modelo, ano, cor, portas, placa, preco, chassi) VALUES
+('1', 'Corolla', '2020-01-01', 'Prata', '4', 'ABC1D23', 85000.00, '1HGBH41JXMN109186'),
+('2', 'Civic', '2019-01-01', 'Preto', '4', 'XYZ4W56', 95000.00, '1HGCM82633A123456'),
+('3', 'Fiesta', '2021-01-01', 'Vermelho', '4', 'LMN7O89', 55000.00, '1FADP3F20JL123456');
 select * from tb_carros2;
 
 -- TB VENDA FINAL
-INSERT INTO tb_vendas (id_carro, id_vendedor, id_cliente, data_venda, valor) VALUES
-(1, 1, 1, '2024-10-01', 90000.00),
-(2, 2, 2, '2024-10-02', 85000.00);
+INSERT INTO tb_vendas (id_carro, id_vendedor, id_cliente, valor) VALUES
+(1, 1, 1, 90000.00),
+(2, 2, 2, 85000.00);
 select * from tb_vendas;
 
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE tb_vendas;
 TRUNCATE TABLE tb_carros2;
+TRUNCATE TABLE tb_marcas;
 TRUNCATE TABLE tb_vendedores;
 TRUNCATE TABLE tb_clientes;
 TRUNCATE TABLE tb_dpClientes;
