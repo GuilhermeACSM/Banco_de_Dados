@@ -166,6 +166,7 @@ INSERT INTO tb_vendas (id_carro, id_vendedor, id_cliente, valor) VALUES
 (2, 2, 2, 85000.00);
 select * from tb_vendas;
 
+
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE tb_vendas;
 TRUNCATE TABLE tb_carros2;
@@ -182,4 +183,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 SELECT dc.*, c.* FROM tb_dpClientes dc INNER JOIN tb_clientes c ON dc.id = c.id_dpCliente;
 
 select * from tb_dpClientes left join tb_vendas on (tb_dpClientes.id = tb_clientes.id_dpCliente);
+
+
 
