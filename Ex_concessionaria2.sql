@@ -129,10 +129,12 @@ INSERT INTO tb_vendas (id_carro, id_vendedor, id_cliente, valor) VALUES
 (1, 1, 1, 90000.00),
 (2, 2, 2, 85000.00);
 
+
+
 -- SELECT FINAL
 SELECT * FROM tb_dpClientes LEFT JOIN tb_clientes ON (tb_dpClientes.id = tb_clientes.id_dpCliente);
 
-SELECT * FROM tb_dpClientes RIGHT JOIN tb_clientes ON (tb_dpClientes.id = tb_clientes.id_dpCliente);
+SELECT * FROM tb_clientes RIGHT JOIN tb_dpClientes ON (tb_dpClientes.id = tb_clientes.id_dpCliente);
 
 -- SELECT para obter dados de tb_dpClientes e tb_clientes apenas onde há correspondência
 SELECT dc.*, c.* FROM tb_dpClientes dc INNER JOIN tb_clientes c ON dc.id = c.id_dpCliente;
