@@ -94,7 +94,7 @@ INSERT INTO tb_dpCliente (id_dpCliente, nome, rg, cpf, data_nasc, sexo) VALUES
 (43, 'Cláudia Ramos', '95135768', 95135768401, '1992-02-18', 'F'),
 (44, 'Renato Lemos', '78965473', 78965473201, '1985-06-27', 'M'),
 (45, 'Nathália Cruz', '75385219', 75385219701, '1994-01-13', 'F'),
-(46, 'Leandro Prado', '96325814', 96325814701, '1987-10-08', 'M'),
+(46, 'Leandro Prado', '96325814', 96325814701, '1987-10-08', 'M'), -- A PARTIR DAQUI SÃO PESSOAS QUE TRABALHAM NA CONCESSIONARIA
 (47, 'Paula Freitas', '45698712', 45698712301, '1990-09-16', 'F'),
 (48, 'Rafael Campos', '14796385', 14796385201, '1982-03-21', 'M'),
 (49, 'Tatiane Ferreira', '36925814', 36925814701, '1996-08-10', 'F'),
