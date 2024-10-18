@@ -40,6 +40,13 @@ create table tb_vendedor (
 	foreign key (id_dpCliente) references tb_dpCliente(id_dpCliente)
 );
 
+create table tb_cargo (
+	id_cargo int auto_increment primary key,
+    cargo varchar(30) not null,
+    id_vendedor int not null,
+    foreign key (id_vendedor) references tb_vendedor(id_vendedor)
+);
+
 -- DADOS PESSOAIS CLIENTES
 INSERT INTO tb_dpCliente (id_dpCliente, nome, rg, cpf, data_nasc, sexo) VALUES
 (1, 'Carlos Silva', '12345678', 12345678901, '1980-01-15', 'M'),
@@ -264,25 +271,6 @@ INSERT INTO tb_endereco (id_endereco, rua, estado, pais, id_dpCliente) VALUES
 (49, 'Rua AW, 5791', 'Distrito Federal', 'Brasil', 49),
 (50, 'Rua AX, 6802', 'Espírito Santo', 'Brasil', 50);
 
-
-insert into tb_vendedor (id_vendedor, salario , id_dpCliente) VALUES
-(1,46),
-(1,47),
-(1,48),
-(1,49),
-(1,50);
-
-
-
-
-
-
-
-drop table tb_dpCliente;
-drop table tb_email;
-drop table tb_telefone;
-drop table tb_endereco;
-
 -- MOSTRA O ENDEREÇO DOS CLIENTES
 select tb_dpCliente.nome , tb_endereco.rua from tb_dpCliente inner join tb_endereco on (tb_dpCliente.id_dpCliente = tb_endereco.id_dpCliente);
 select tb_dpCliente.nome , tb_endereco.estado from tb_dpCliente inner join tb_endereco on (tb_dpCliente.id_dpCliente = tb_endereco.id_dpCliente);
@@ -292,5 +280,26 @@ select tb_dpCliente.nome , tb_endereco.id_endereco from tb_dpCliente inner join 
 select tb_dpCliente.nome , tb_endereco.* from tb_dpCliente inner join tb_endereco on (tb_dpCliente.id_dpCliente = tb_endereco.id_dpCliente);
 
 
+-- VENDEDOR
+insert into tb_vendedor (id_vendedor, salario , id_dpCliente) VALUES
+(1,8000,46),
+(2,4000,47),
+(3,2000,48),
+(4,3000,49),
+(5,2000,50);
 
+-- NOME DO VENDEDOR E SEU SALARIO
+select tb_dpcliente.nome, tb_vendedor.salario from tb_dpcliente inner join tb_vendedor on (tb_dpCliente.id_dpCliente = tb_vendedor.id_dpCliente);
 
+insert into tb_cargo (id_cargo, cargo , id_vendedor) VALUES
+('1','Gerente','1'),
+('2','Vendedor','2'),
+('3','Faxineiro','3'),
+('4','Vendedor','4'),
+('5','Faxineiro','5');
+
+-- BUSCA O ID DO VENDEDOR E COLOCA O CARGO DELE
+select tb_vendedor.id_vendedor, tb_cargo.cargo from tb_vendedor inner join tb_cargo on (tb_vendedor.id_vendedor = tb_cargo.id_vendedor);
+
+-- BUSCA O NOME DO VENDEDOR E COLOCA O CARGO DELE
+SELECT tb_dpCliente.nome, tb_cargo.cargo FROM tb_vendedor INNER JOIN tb_dpCliente ON (tb_vendedor.id_dpCliente = tb_dpCliente.id_dpCliente) INNER JOIN tb_cargo ON (tb_vendedor.id_vendedor = tb_cargo.id_vendedor);
