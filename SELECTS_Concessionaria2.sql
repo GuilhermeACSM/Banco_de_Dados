@@ -47,8 +47,6 @@ select tb_dpCliente.nome , tb_telefone.telefone from tb_dpCliente inner join tb_
 SELECT tb_carro.modelo, tb_dpCliente.nome FROM tb_venda INNER JOIN tb_carro ON tb_venda.id_carro = tb_carro.id_carro INNER JOIN tb_marca ON tb_carro.id_marca = tb_marca.id_marca INNER JOIN tb_cliente ON tb_venda.id_cliente = tb_cliente.id_cliente INNER JOIN tb_dpCliente ON tb_cliente.id_dpCliente = tb_dpCliente.id_dpCliente;
 
 
-
-
 -- Select Vendedor e Carro
 SELECT 
     tb_carro.modelo,
@@ -65,7 +63,6 @@ JOIN
     tb_cargo ON tb_funcionario.id_funcionario = tb_cargo.id_funcionario
 WHERE 
     tb_cargo.cargo = 'Vendedor';
-
 
 
 SELECT -- cliente e modelo
