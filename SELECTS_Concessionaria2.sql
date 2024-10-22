@@ -49,7 +49,7 @@ SELECT tb_carro.modelo, tb_dpCliente.nome FROM tb_venda INNER JOIN tb_carro ON t
 
 
 
-
+-- Select Vendedor e Carro
 SELECT 
     tb_carro.modelo,
     tb_dpCliente.nome AS nome_vendedor
@@ -80,10 +80,3 @@ JOIN
 JOIN 
     tb_dpCliente ON tb_cliente.id_dpCliente = tb_dpCliente.id_dpCliente;
 
-
-
-
-
-
-
-SELECT tb_venda.id_carro, tb_venda.id_cliente, id_funcionario FROM TB_VENDA;
