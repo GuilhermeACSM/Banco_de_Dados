@@ -31,14 +31,59 @@ select tb_vendedor.id_funcionario, tb_cargo.cargo from tb_funcionario inner join
 -- BUSCA O NOME DO VENDEDOR E COLOCA O CARGO DELE
 SELECT tb_dpCliente.nome, tb_cargo.cargo FROM tb_vendedor INNER JOIN tb_dpCliente ON (tb_funcionario.id_dpCliente = tb_dpCliente.id_dpCliente) INNER JOIN tb_cargo ON (tb_funcionario.id_funcionario = tb_cargo.id_funcionario);
 
+-- Seleciona somente os carros com essa marca
+SELECT tb_carro.* FROM tb_carro INNER JOIN tb_marca ON tb_carro.id_marca = tb_marca.id_marca WHERE tb_marca.marca = 'Toyota';
+SELECT tb_carro.*, tb_marca.marca FROM tb_carro INNER JOIN tb_marca ON tb_carro.id_marca = tb_marca.id_marca WHERE tb_marca.marca = 'Toyota';
 
 
 
-
+-- Carros abaixo desse ano
 select * from tb_carro where ano < '2020-01-01';
-
-
 
 -- MOSTRAR OS TELEFONES DOS CLIENTES
 select tb_dpCliente.nome , tb_telefone.telefone from tb_dpCliente inner join tb_telefone on (tb_dpCliente.id_dpCliente = tb_telefone.id_dpCliente); -- select
 
+
+SELECT tb_carro.modelo, tb_dpCliente.nome FROM tb_venda INNER JOIN tb_carro ON tb_venda.id_carro = tb_carro.id_carro INNER JOIN tb_marca ON tb_carro.id_marca = tb_marca.id_marca INNER JOIN tb_cliente ON tb_venda.id_cliente = tb_cliente.id_cliente INNER JOIN tb_dpCliente ON tb_cliente.id_dpCliente = tb_dpCliente.id_dpCliente;
+
+
+
+
+
+SELECT 
+    tb_carro.modelo,
+    tb_dpCliente.nome AS nome_vendedor
+FROM 
+    tb_venda
+JOIN 
+    tb_carro ON tb_venda.id_carro = tb_carro.id_carro
+JOIN 
+    tb_funcionario ON tb_venda.id_funcionario = tb_funcionario.id_funcionario
+JOIN 
+    tb_dpCliente ON tb_funcionario.id_dpCliente = tb_dpCliente.id_dpCliente
+JOIN 
+    tb_cargo ON tb_funcionario.id_funcionario = tb_cargo.id_funcionario
+WHERE 
+    tb_cargo.cargo = 'Vendedor';
+
+
+
+SELECT -- cliente e modelo
+    tb_carro.modelo,
+    tb_dpCliente.nome AS nome_cliente
+FROM 
+    tb_venda
+JOIN 
+    tb_carro ON tb_venda.id_carro = tb_carro.id_carro
+JOIN 
+    tb_cliente ON tb_venda.id_cliente = tb_cliente.id_cliente
+JOIN 
+    tb_dpCliente ON tb_cliente.id_dpCliente = tb_dpCliente.id_dpCliente;
+
+
+
+
+
+
+
+SELECT tb_venda.id_carro, tb_venda.id_cliente, id_funcionario FROM TB_VENDA;
