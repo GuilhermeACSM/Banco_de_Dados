@@ -1,58 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 * {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0px;
-    padding: 0px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-    display: flex;
-    margin: auto;
-    flex-direction: column;
-    justify-content: center;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.301);
+  background-image: url("../images/bg-signup.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed
+  
 }
 
-h1 {
-    justify-content: center;
-    text-align: center;
-    color: rgb(0, 0, 0);
-    
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 100px;
 }
 
-.forms {
-    border-radius: 5px;
-    margin: auto;
-    padding: 10px;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
+.card {
+  background-color: #ffffff80;
+  padding: 30px;
+  border-radius: 4%;
+  box-shadow: 3px 3px 1px 0px #00000060;
+  width: 400px;
 }
 
-.inputs {
-    font-size: 1.2em;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+h1{
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000000
 }
 
-.titulo {
-    
-    border-radius: 5px;
-    margin: auto;
-    width: 50%;
-    background-color: white;
+.label-float input{
+  width: 100%;
+  padding: 5px 5px;
+  display: inline-block;
+  border: 0;
+  border-bottom: 2px solid #000000;
+  background-color: transparent;
+  outline: none;
+  min-width: 180px;
+  font-size: 16px;
+  transition: all .3s ease-out;
+  border-radius: 0;
+  
 }
 
-.inputs  input {
-    width: 100%;
-    padding: 3px;
-    border-radius: 5px;
-    border: solid rgba(0, 0, 0, 0.658) 2px;
-    height: 30px;
+.label-float{
+  position: relative;
+  padding-top: 13px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
-.adicionar {
-    margin: auto;
-    justify-content: center;
-    width: 100%;
+.label-float input:focus{
+  border-bottom: 2px solid #000000;
+}
+
+.label-float label{
+  color: #000000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 13px;
+  transition: all .3s ease-out;
+}
+
+.label-float input:focus + label,
+.label-float input:valid + label{
+  font-size: 13px;
+  margin-top: 0;
+  color: #000000
+}
+
+button{
+  background-color: transparent;
+  border-color: #0d009c;
+  color: #0d009c;
+  padding: 7px;
+  font-weight: bold;
+  font-size: 12pt;
+  margin-top: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: all .4s ease-out;
+}
+
+button:hover{
+  background-color: #0d009c;
+  color: #fff;
+}
+
+.justify-center{
+  display: flex;
+  justify-content: center;
+}
+
+.fa-eye{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  color: #0d009c;
 }
