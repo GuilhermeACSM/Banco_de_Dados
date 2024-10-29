@@ -109,3 +109,44 @@ button:hover{
   cursor: pointer;
   color: #0d009c;
 }
+
+table {
+  width: 65%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ffffff80;
+  padding: 8px;
+  text-align: center;
+  width: 100px;
+}
+th {
+  background-color: #ffffff80;
+}
+
+
+/*----- Botões de editar e excluir -----*/
+#gerenciarBtn{
+  margin-top: 4px;
+  padding: 4px;
+}
+
+
+
+
+@media (max-width: 1250px){
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+}
