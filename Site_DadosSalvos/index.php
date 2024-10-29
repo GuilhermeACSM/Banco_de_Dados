@@ -9,9 +9,8 @@
     $host = 'localhost';
     $user = 'root';
     $pass = '';
-    $bd = 'db_concessionaria1';
-    $link = mysqli_connect($host, $user, $pass, $bd);
 
+    $link = mysqli_connect($host, $user, $pass);
 
     if($link) {
         echo'banco conectado';
