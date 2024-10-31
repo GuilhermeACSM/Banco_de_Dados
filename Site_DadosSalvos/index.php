@@ -42,6 +42,10 @@
     // ----- Create ----- //
     mysqli_query($link, "INSERT INTO TB_INFO(SERVICO, LOGIN, SENHA) VALUES('$servico', '$login', '$senha')");
     };
+
+    // ----- Read----- //
+    $resultado = mysqli_query($link, 'SELECT * FROM TB_INFO');
+    // print_r($resultado);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +62,7 @@
     <form method="POST" action="index.php">
         <div class="container">
             <div class="card">
-                <h1>Cadastrar</h1>
+                <h1>Carteira</h1>
                 <div class="label-float">
                 <input type="text" id="nome" placeholder=" " required  name="servico"/>
                 <label id="labelNome" for="nome">Nome do Site</label>
@@ -93,16 +97,18 @@
             </thead>
             <tbody>
                 <?php
-                    echo"<tr>";
-                        echo"<td></td>";
-                        echo"<td></td>";
-                        echo"<td></td>";
-                        echo"<td></td>";
-                        echo"<td>
-                                <button id='gerenciarBtn'>Editar</button>
-                                <button id='gerenciarBtn'>Excluir</button>
-                            </td>";
-                    echo"</tr>";
+                    while($dados = mysqli_fetch_assoc($resultado)){
+                        echo"<tr>";
+                            echo"<td>".$dados['id']."</td>";
+                            echo"<td>".$dados['servico']."</td>";
+                            echo"<td>".$dados['login']."</td>";
+                            echo"<td>".$dados['senha']."</td>";
+                            echo"<td>
+                                    <button id='gerenciarBtn'>Editar</button>
+                                    <button id='gerenciarBtn'>Excluir</button>
+                                </td>";
+                        echo"</tr>";
+                    };
                 ?>
             </tbody>
         </table>
