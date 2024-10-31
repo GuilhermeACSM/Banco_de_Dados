@@ -127,9 +127,12 @@ th {
 
 /*----- Botões de editar e excluir -----*/
 #gerenciarBtn{
-  margin-top: 4px;
+  width: 65px;
+  margin-top: 2px;
   padding: 4px;
 }
+
+
 
 
 
@@ -148,4 +151,5 @@ th, td {
 th {
   background-color: #f2f2f2;
 }
+
 }
