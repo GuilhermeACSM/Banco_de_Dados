@@ -1,28 +1,31 @@
 <?php
-    // ----- Somente para mostrar na tela o que está pegando!! -----
+    // ----- Somente para mostrar na tela o que está pegando!! ----- //
     /*
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
     */
 
-    // ----- Conexão com o banco -----
+
+    // ----- Conexão com o banco ----- //
     $host = 'localhost';
     $user = 'root';
     $pass = '';
     $db = 'db_senhas';
     $link = mysqli_connect($host, $user, $pass, $db);
 
-    /*
+
+    // ----- Para mostrar que o banco está conectado!! ----- //
+    /*  
     if($link) {
         echo'banco conectado';
     };
     */
 
-    // ----- Comando para criar o Banco de Dados -----
+    // ----- Comando para criar o Banco de Dados ----- //
     mysqli_query($link, 'CREATE DATABASE IF NOT EXISTS DB_SENHAS');
 
-    // ----- Comando para criar a tabela do Banco de Dados -----
+    // ----- Comando para criar a tabela do Banco de Dados ----- //
     mysqli_query($link, 'CREATE TABLE IF NOT EXISTS TB_INFO(
         id int primary key auto_increment not null,
         servico varchar(50) not null,
@@ -30,14 +33,15 @@
         senha varchar(70) not null
     )');
 
+    // ----- Declarando os dados que eu vou colocar na Tabela ----- //
+    if($_POST) {
+        $servico = $_POST['servico'];
+        $login = $_POST['login'];
+        $senha = $_POST['senha'];
 
-    // ----- Declarando os dados que eu vou colocar na Tabela -----
-    $servico = $_POST['servico'];
-    $login = $_POST['login'];
-    $senha = $_POST['senha'];
-
-    // ----- Inserindo dados na Tabela do Banco -----
+    // ----- Create ----- //
     mysqli_query($link, "INSERT INTO TB_INFO(SERVICO, LOGIN, SENHA) VALUES('$servico', '$login', '$senha')");
+    };
 ?>
 
 <!DOCTYPE html>
@@ -88,16 +92,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button id='gerenciarBtn'>Editar</button>
-                        <button id='gerenciarBtn'>Excluir</button>
-                    </td>
-                </tr>
+                <?php
+                    echo"<tr>";
+                        echo"<td></td>";
+                        echo"<td></td>";
+                        echo"<td></td>";
+                        echo"<td></td>";
+                        echo"<td>
+                                <button id='gerenciarBtn'>Editar</button>
+                                <button id='gerenciarBtn'>Excluir</button>
+                            </td>";
+                    echo"</tr>";
+                ?>
             </tbody>
         </table>
     </div>
