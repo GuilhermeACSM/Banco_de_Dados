@@ -8,11 +8,7 @@
 
 
     // ----- Conexão com o banco ----- //
-    $host = 'localhost';
-    $user = 'root';
-    $pass = '';
-    $db = 'db_senhas';
-    $link = mysqli_connect($host, $user, $pass, $db);
+    require "conexao.php";
 
 
     // ----- Para mostrar que o banco está conectado!! ----- //
@@ -41,11 +37,25 @@
 
     // ----- Create ----- //
     mysqli_query($link, "INSERT INTO TB_INFO(SERVICO, LOGIN, SENHA) VALUES('$servico', '$login', '$senha')");
+
+    // ----- Serve para ao recarregar a página não repetir os dados salvos anteriormente ----- //
+    unset($_POST);
+    header("Location: index.php");
     };
 
     // ----- Read----- //
     $resultado = mysqli_query($link, 'SELECT * FROM TB_INFO');
     // print_r($resultado);
+
+    // ----- Delete ----- //
+    if (isset($_GET['acao']) && $_GET['acao'] == 'excluir') {
+        $id = intval($_GET['id']); // Obtem o ID da URL e o converte para inteiro
+        mysqli_query($link, "DELETE FROM TB_INFO WHERE id = $id"); // Executa a exclusão
+        header('Location: index.php'); // Redireciona após a exclusão
+        exit; // Garante que o script não continue após o redirecionamento
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +63,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <title>Carteira de Login e Senhas</title>
 </head>
 <body>
@@ -104,8 +114,8 @@
                             echo"<td>".$dados['login']."</td>";
                             echo"<td>".$dados['senha']."</td>";
                             echo"<td>
-                                    <button id='gerenciarBtn'>Editar</button>
-                                    <button id='gerenciarBtn'>Excluir</button>
+                                    <a><button id='gerenciarBtn'>Editar</button></a>
+                                    <a href='index.php?acao=excluir&id".$dados['id']."'><button id='gerenciarBtn'>Excluir</button></a>
                                 </td>";
                         echo"</tr>";
                     };
