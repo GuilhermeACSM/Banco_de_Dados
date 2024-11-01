@@ -35,17 +35,23 @@
         $login = $_POST['login'];
         $senha = $_POST['senha'];
 
+
+// ----------------------- CRUD ----------------------- // 
     // ----- Create ----- //
     mysqli_query($link, "INSERT INTO TB_INFO(SERVICO, LOGIN, SENHA) VALUES('$servico', '$login', '$senha')");
 
-    // ----- Serve para ao recarregar a página não repetir os dados salvos anteriormente ----- //
     unset($_POST);
     header("Location: index.php");
     };
 
-    // ----- Read----- //
+
+    // ----- Read ----- //
     $resultado = mysqli_query($link, 'SELECT * FROM TB_INFO');
     // print_r($resultado);
+
+
+    // ----- Update ----- //
+
 
     // ----- Delete ----- //
     if (isset($_GET['acao']) && $_GET['acao'] == 'excluir') {
@@ -115,7 +121,7 @@
                             echo"<td>".$dados['senha']."</td>";
                             echo"<td>
                                     <a><button id='gerenciarBtn'>Editar</button></a>
-                                    <a href='index.php?acao=excluir&id".$dados['id']."'><button id='gerenciarBtn'>Excluir</button></a>
+                                    <a href='index.php?acao=excluir&id=".$dados['id']."'><button id='gerenciarBtn'>Excluir</button></a>
                                 </td>";
                         echo"</tr>";
                     };
