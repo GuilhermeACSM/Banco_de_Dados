@@ -5,6 +5,4 @@ $user = 'root';
 $pass = '';
 $db = 'db_senhas';
 $link = mysqli_connect($host, $user, $pass, $db);
-
-
 ?>
