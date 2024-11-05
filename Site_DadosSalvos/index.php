@@ -1,7 +1,7 @@
 <?php
 require "conexao.php";
 
-// Criação do Banco de Dados e Tabela
+// CREATE
 mysqli_query($link, 'CREATE DATABASE IF NOT EXISTS DB_SENHAS');
 mysqli_query($link, 'CREATE TABLE IF NOT EXISTS TB_INFO(
     id int primary key auto_increment not null,
@@ -10,7 +10,6 @@ mysqli_query($link, 'CREATE TABLE IF NOT EXISTS TB_INFO(
     senha varchar(70) not null
 )');
 
-// Inserção de dados
 if ($_POST) {
     $servico = $_POST['servico'];
     $login = $_POST['login'];
@@ -20,10 +19,12 @@ if ($_POST) {
     header("Location: index.php");
 }
 
-// Leitura de dados
+
+// READ
 $resultado = mysqli_query($link, 'SELECT * FROM TB_INFO');
 
-// Exclusão de dados
+
+// DELETE
 if (isset($_GET['acao']) && $_GET['acao'] == 'excluir') {
     $id = intval($_GET['id']);
     mysqli_query($link, "DELETE FROM TB_INFO WHERE id = $id");
@@ -84,9 +85,9 @@ if (isset($_GET['acao']) && $_GET['acao'] == 'excluir') {
                     while ($dados = mysqli_fetch_assoc($resultado)) {
                         echo"<tr>";
                         echo"<td>" . $dados['id'] . "</td>";
-                        echo"<td>" . htmlspecialchars($dados['servico']) . "</td>";
-                        echo"<td>" . htmlspecialchars($dados['login']) . "</td>";
-                        echo"<td>" . htmlspecialchars($dados['senha']) . "</td>";
+                        echo"<td>" . ($dados['servico']) . "</td>";
+                        echo"<td>" . ($dados['login']) . "</td>";
+                        echo"<td>" . ($dados['senha']) . "</td>";
                         echo"<td>
                                 <a href='update.php?id=" . $dados['id'] . "'><button id='gerenciarBtn'>Editar</button></a>
                                 <a href='index.php?acao=excluir&id=" . $dados['id'] . "'><button id='gerenciarBtn'>Excluir</button></a>
