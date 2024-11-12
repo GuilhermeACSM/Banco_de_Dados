@@ -5,8 +5,11 @@ require "conexao.php";
 // Obtém o ID do contato
 $id_pessoa = $_GET['id'];
 
+// Variável para controle de sucesso
+$sucesso = false;
+
 // Verifica se o formulário foi enviado para atualizar o contato
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_POST) {
     $nome = $_POST['nome'];
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
@@ -20,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Atualiza o email
     mysqli_query($link, "UPDATE TB_EMAIL SET email='$email' WHERE id_pessoa=$id_pessoa");
 
-    echo "Contato atualizado com sucesso!";
+    // Marca que o contato foi adicionado com sucesso
+    $sucesso = true;
 }
 
 // Consulta os dados do contato atual
@@ -29,6 +33,7 @@ JOIN TB_TELEFONE t ON p.id_pessoa = t.id_pessoa
 JOIN TB_EMAIL e ON p.id_pessoa = e.id_pessoa
 WHERE p.id_pessoa = $id_pessoa");
 $contato = mysqli_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -36,13 +41,30 @@ $contato = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <title>Editar Contato</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <h1>Editar Contato</h1>
-    <form method="POST" action="">
-        <label>Nome: <input type="text" name="nome" value="<?php echo $contato['nome']; ?>" required></label><br>
-        <label>Telefone: <input type="text" name="telefone" value="<?php echo $contato['telefone']; ?>" required></label><br>
-        <label>Email: <input type="email" name="email" value="<?php echo $contato['email']; ?>" required></label><br>
+    <header>
+        <div class="tittle">
+            <h1>Agenda de Contatos</h1>
+        </div>
+        <div class="btn-adiciona">
+            <a href="index.php"><button class="btn">VOLTAR</button></a>
+        </div>
+    </header>
+    <form method="POST" action="" class="form-edit">
+        <h1>Editar Contato</h1>
+        <label>Nome: <input type="text" name="nome" value="<?php echo $contato['nome']; ?>" required></label>
+        <label>Telefone: <input type="text" name="telefone" value="<?php echo $contato['telefone']; ?>" required></label>
+        <label>Email: <input type="email" name="email" value="<?php echo $contato['email']; ?>" required></label>
+
+        <?php
+        // Exibe a mensagem de sucesso somente quando a variável $sucesso for verdadeira
+        if ($sucesso) {
+            echo '<p style="color: green; font-weight: bold;">Contato editado com sucesso!</p>';
+        }
+        ?>
+
         <button type="submit">Salvar</button>
     </form>
 </body>
