@@ -2,7 +2,6 @@
 // Conexão com o Banco
 require "conexao.php";
 
-
 // Banco
 mysqli_query($link, 'CREATE DATABASE IF NOT EXISTS DB_CONTATOS');
 
@@ -26,28 +25,33 @@ mysqli_query($link, 'CREATE TABLE IF NOT EXISTS TB_TELEFONE (
     foreign key (id_pessoa) references TB_PESSOA(id_pessoa)
 )');
 
-// Variável de pesquisa
-$searchTerm = isset($_GET['search']) ? $_GET['search'] : ''; // Termo de pesquisa
+// Se houver um termo de busca, capture diretamente do POST
+$searchTerm = isset($_POST['search']) ? $_POST['search'] : '';
 
 // Consulta para obter dados das 3 tabelas com filtro de busca, se presente
 $query = "
-        SELECT 
-    p.id_pessoa, 
-    p.nome, 
-    e.email, 
-    t.telefone
-FROM 
-    TB_PESSOA p
-INNER JOIN 
-    TB_EMAIL e ON p.id_pessoa = e.id_pessoa
-INNER JOIN 
-    TB_TELEFONE t ON p.id_pessoa = t.id_pessoa
-ORDER BY 
-    p.nome;
+    SELECT 
+        p.id_pessoa, 
+        p.nome, 
+        GROUP_CONCAT(e.email) as emails,  -- Agrupa os e-mails associados à pessoa
+        GROUP_CONCAT(t.telefone) as telefones  -- Agrupa os telefones associados à pessoa
+    FROM 
+        TB_PESSOA p
+    LEFT JOIN 
+        TB_EMAIL e ON p.id_pessoa = e.id_pessoa
+    LEFT JOIN 
+        TB_TELEFONE t ON p.id_pessoa = t.id_pessoa
+    " . ($searchTerm !== '' ? 
+        "WHERE p.nome LIKE '%" . $searchTerm . "%' 
+        OR e.email LIKE '%" . $searchTerm . "%' 
+        OR t.telefone LIKE '%" . $searchTerm . "%'" : "") . "
+    GROUP BY p.id_pessoa
+    ORDER BY p.id_pessoa; 
 ";
+
+
 // Executa a consulta
 $resultado = mysqli_query($link, $query);
-
 ?>
 
 <!DOCTYPE html>
@@ -71,8 +75,8 @@ $resultado = mysqli_query($link, $query);
         <section>
             <div class="search-container">
                 <label for="search">Buscar Contato</label>
-                <form method="GET" action="index.php" class="search-form">
-                    <input type="text" name="search" id="search" value="<?= ($searchTerm) ?>" placeholder="Digite o nome para buscar...">
+                <form method="POST" action="index.php" class="search-form">
+                    <input type="text" name="search" id="search" value="<?= ($searchTerm) ?>" placeholder="Digite o nome, telefone ou e-mail para buscar...">
                     <button type="submit" class="btn-buscar">Buscar</button>
                 </form>
             </div>
@@ -96,9 +100,9 @@ $resultado = mysqli_query($link, $query);
                         while ($dados = mysqli_fetch_assoc($resultado)) {
                             echo "<tr>";
                             echo "<td>" . $dados['id_pessoa'] . "</td>";
-                            echo "<td>" . htmlspecialchars($dados['nome']) . "</td>";
-                            echo "<td>" . htmlspecialchars($dados['telefones'] ?? 'Nenhum') . "</td>";
-                            echo "<td>" . htmlspecialchars($dados['emails'] ?? 'Nenhum') . "</td>";
+                            echo "<td>" . ($dados['nome']) . "</td>";
+                            echo "<td>" . (isset($dados['telefones']) ? ($dados['telefones']) : 'Nenhum') . "</td>";
+                            echo "<td>" . (isset($dados['emails']) ? ($dados['emails']) : 'Nenhum') . "</td>";
                             echo "<td>
                                     <a href='edit.php?id=" . $dados['id_pessoa'] . "'><button class='btn-small'>Editar</button></a>
                                     <a href='delete.php?acao=excluir&id=" . $dados['id_pessoa'] . "'><button class='btn-small'>Excluir</button></a>
