@@ -25,6 +25,7 @@ mysqli_query($link, 'CREATE TABLE IF NOT EXISTS TB_TELEFONE (
     foreign key (id_pessoa) references TB_PESSOA(id_pessoa)
 )');
 
+
 // Se houver um termo de busca, capture diretamente do POST
 $searchTerm = isset($_POST['search']) ? $_POST['search'] : '';
 
@@ -33,8 +34,8 @@ $query = "
     SELECT 
         p.id_pessoa,
         p.nome,
-        e.email,
-        t.telefone
+        GROUP_CONCAT(DISTINCT e.email SEPARATOR '<br>') as emails,
+        GROUP_CONCAT(DISTINCT t.telefone SEPARATOR '<br>') as telefones
     FROM 
         TB_PESSOA p
     LEFT JOIN 
@@ -42,11 +43,10 @@ $query = "
     LEFT JOIN 
         TB_TELEFONE t ON p.id_pessoa = t.id_pessoa
     WHERE 
-    p.nome like '%" . $searchTerm . "%' 
-    OR
-    e.email like '%" . $searchTerm . "%'
-    OR
-    t.telefone like '%" . $searchTerm . "%'
+        p.nome LIKE '%" . $searchTerm . "%' 
+        OR e.email LIKE '%" . $searchTerm . "%'
+        OR t.telefone LIKE '%" . $searchTerm . "%'
+    GROUP BY p.id_pessoa
 ";
 
 // Executa a consulta
@@ -100,8 +100,8 @@ $resultado = mysqli_query($link, $query);
                             echo "<tr>";
                             echo "<td>" . $dados['id_pessoa'] . "</td>";
                             echo "<td>" . ($dados['nome']) . "</td>";
-                            echo "<td>" . (isset($dados['telefone']) ? ($dados['telefone']) : 'Nenhum') . "</td>";
-                            echo "<td>" . (isset($dados['email']) ? ($dados['email']) : 'Nenhum') . "</td>";
+                            echo "<td>" . ($dados['telefones'] ?: 'Nenhum') . "</td>";
+                            echo "<td>" . ($dados['emails'] ?: 'Nenhum') . "</td>";
                             echo "<td>
                                     <a href='edit.php?id=" . $dados['id_pessoa'] . "'><button class='btn-small'>Editar</button></a>
                                     <a href='delete.php?acao=excluir&id=" . $dados['id_pessoa'] . "'><button class='btn-small' id='excluir'>Excluir</button></a>

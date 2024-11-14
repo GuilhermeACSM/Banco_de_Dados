@@ -1,36 +1,31 @@
 <?php
-// Conexão com o banco
-require "conexao.php";
+require 'conexao.php';
 
-// Variável para controle de sucesso
-$sucesso = false;
+$_sucesso = false;
 
-// Verifica se o formulário foi enviado
 if ($_POST) {
     $nome = $_POST['nome'];
-    $telefone = $_POST['telefone'];
-    $email = $_POST['email'];
+    $telefones = $_POST['telefone'];
+    $emails = $_POST['email'];
 
-    $telefoneExpandido = explode(',',$telefone);
-    $emailExpandido = explode(',',$email);
-
-    // Insere a pessoa
-    mysqli_query($link, "INSERT INTO TB_PESSOA (nome) VALUES ('$nome')");
-
+    // Criação do contato
+    mysqli_query($link, "INSERT INTO TB_PESSOA (NOME) VALUES ('$nome')");
     $id_pessoa = mysqli_insert_id($link);
-    
-    // Insere o telefone 
-    for ($i = 0; $i < count($telefoneExpandido); $i++) {
-        mysqli_query($link, "INSERT INTO TB_TELEFONE (telefone, id_pessoa) VALUES ('$telefoneExpandido[$i]', $id_pessoa)");
+
+    // Inserção dos telefones
+    $telefoneExpandido = explode(',', $telefones);
+    foreach ($telefoneExpandido as $tel) {
+        mysqli_query($link, "INSERT INTO TB_TELEFONE (TELEFONE, id_pessoa) VALUES ('$tel', $id_pessoa)");
     }
 
-    // Insere o email
-    for ($e = 0; $e < count($emailExpandido); $e++) {
-        mysqli_query($link, "INSERT INTO TB_EMAIL (email, id_pessoa) VALUES ('$emailExpandido[$e]', $id_pessoa)");
+    // Inserção dos e-mails
+    $emailExpandido = explode(',', $emails);
+    foreach ($emailExpandido as $em) {
+        mysqli_query($link, "INSERT INTO TB_EMAIL (EMAIL, id_pessoa) VALUES ('$em', $id_pessoa)");
     }
 
-    // Marca que o contato foi adicionado com sucesso
-    $sucesso = true;
+    unset($_POST);
+    $_sucesso = true;
 }
 ?>
 
@@ -58,7 +53,7 @@ if ($_POST) {
 
         <?php
         // Exibe a mensagem de sucesso somente quando a variável $sucesso for verdadeira
-        if ($sucesso) {
+        if ($_sucesso) {
             echo '<p style="color: green; font-weight: bold;">Contato adicionado com sucesso!</p>';
         }
         ?>
