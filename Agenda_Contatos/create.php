@@ -11,16 +11,23 @@ if ($_POST) {
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
 
+    $telefoneExpandido = explode(',',$telefone);
+    $emailExpandido = explode(',',$email);
+
     // Insere a pessoa
     mysqli_query($link, "INSERT INTO TB_PESSOA (nome) VALUES ('$nome')");
 
     $id_pessoa = mysqli_insert_id($link);
     
-    // Insere o telefone
-    mysqli_query($link, "INSERT INTO TB_TELEFONE (telefone, id_pessoa) VALUES ('$telefone', $id_pessoa)");
+    // Insere o telefone 
+    for ($i = 0; $i < count($telefoneExpandido); $i++) {
+        mysqli_query($link, "INSERT INTO TB_TELEFONE (telefone, id_pessoa) VALUES ('$telefoneExpandido[$i]', $id_pessoa)");
+    }
 
     // Insere o email
-    mysqli_query($link, "INSERT INTO TB_EMAIL (email, id_pessoa) VALUES ('$email', $id_pessoa)");
+    for ($e = 0; $e < count($emailExpandido); $e++) {
+        mysqli_query($link, "INSERT INTO TB_EMAIL (email, id_pessoa) VALUES ('$emailExpandido[$e]', $id_pessoa)");
+    }
 
     // Marca que o contato foi adicionado com sucesso
     $sucesso = true;
@@ -56,7 +63,7 @@ if ($_POST) {
         }
         ?>
 
-        <button type="submit">Adicionar</button>
+        <button type="submit" class="salvar">Adicionar</button>
     </form>
 </body>
 </html>

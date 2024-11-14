@@ -54,6 +54,10 @@ header {
     background-color: #4CAF50; 
 }
 
+.btn-adiciona .btn:hover {
+    background-color:#4caf4fb9;
+}
+
 section {
     display: flex;
     flex-direction: column;
@@ -133,6 +137,10 @@ input {
     border-radius: 5px;
 }
 
+#excluir{
+    color: red;
+}
+
 /* -- Adiciona -- */
 .adiciona-section {
     display: grid;
@@ -207,12 +215,6 @@ input {
     flex-direction: column;
 }
 
-.form-edit button {
-    margin: auto;
-    width: 30%;
-    height: 30px;
-}
-
 .form-edit input {
     width: 80%;
     display: flex;
@@ -220,6 +222,18 @@ input {
     margin-bottom: 10px;
 }
 
+.salvar {
+    margin: auto;
+    width: 30%;
+    height: 30px;
+    color: white;
+    background-color: #4CAF50;
+    cursor: pointer;
+}
+
+.salvar:hover {
+    background-color: #4caf4fb9;
+}
 /* ----- PÁG DELETE -----*/
 .msg-delete {
     display: flex;

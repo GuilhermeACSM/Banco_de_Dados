@@ -31,24 +31,23 @@ $searchTerm = isset($_POST['search']) ? $_POST['search'] : '';
 // Consulta para obter dados das 3 tabelas com filtro de busca, se presente
 $query = "
     SELECT 
-        p.id_pessoa, 
-        p.nome, 
-        GROUP_CONCAT(e.email) as emails,  -- Agrupa os e-mails associados à pessoa
-        GROUP_CONCAT(t.telefone) as telefones  -- Agrupa os telefones associados à pessoa
+        p.id_pessoa,
+        p.nome,
+        e.email,
+        t.telefone
     FROM 
         TB_PESSOA p
     LEFT JOIN 
         TB_EMAIL e ON p.id_pessoa = e.id_pessoa
     LEFT JOIN 
         TB_TELEFONE t ON p.id_pessoa = t.id_pessoa
-    " . ($searchTerm !== '' ? 
-        "WHERE p.nome LIKE '%" . $searchTerm . "%' 
-        OR e.email LIKE '%" . $searchTerm . "%' 
-        OR t.telefone LIKE '%" . $searchTerm . "%'" : "") . "
-    GROUP BY p.id_pessoa
-    ORDER BY p.id_pessoa; 
+    WHERE 
+    p.nome like '%" . $searchTerm . "%' 
+    OR
+    e.email like '%" . $searchTerm . "%'
+    OR
+    t.telefone like '%" . $searchTerm . "%'
 ";
-
 
 // Executa a consulta
 $resultado = mysqli_query($link, $query);
@@ -101,11 +100,11 @@ $resultado = mysqli_query($link, $query);
                             echo "<tr>";
                             echo "<td>" . $dados['id_pessoa'] . "</td>";
                             echo "<td>" . ($dados['nome']) . "</td>";
-                            echo "<td>" . (isset($dados['telefones']) ? ($dados['telefones']) : 'Nenhum') . "</td>";
-                            echo "<td>" . (isset($dados['emails']) ? ($dados['emails']) : 'Nenhum') . "</td>";
+                            echo "<td>" . (isset($dados['telefone']) ? ($dados['telefone']) : 'Nenhum') . "</td>";
+                            echo "<td>" . (isset($dados['email']) ? ($dados['email']) : 'Nenhum') . "</td>";
                             echo "<td>
                                     <a href='edit.php?id=" . $dados['id_pessoa'] . "'><button class='btn-small'>Editar</button></a>
-                                    <a href='delete.php?acao=excluir&id=" . $dados['id_pessoa'] . "'><button class='btn-small'>Excluir</button></a>
+                                    <a href='delete.php?acao=excluir&id=" . $dados['id_pessoa'] . "'><button class='btn-small' id='excluir'>Excluir</button></a>
                                 </td>";
                             echo "</tr>";
                         }
