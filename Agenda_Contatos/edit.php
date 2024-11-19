@@ -4,6 +4,7 @@ require "conexao.php";
 $id_pessoa = $_GET['id'];
 $sucesso = false;
 
+
 $query = "
     SELECT 
         p.id_pessoa, p.nome, 
@@ -29,9 +30,9 @@ if (!$contato) {
 }
 
 if ($_POST) {
-    $nome = $_POST['nome'];
-    $telefones = $_POST['telefone'];
-    $emails = $_POST['email'];
+    $nome = trim($_POST['nome']);
+    $telefones = trim($_POST['telefone']);
+    $emails = trim($_POST['email']);
 
     mysqli_query($link, "UPDATE TB_PESSOA SET nome='$nome' WHERE id_pessoa=$id_pessoa");
 
@@ -50,16 +51,20 @@ if ($_POST) {
     }
 
     $sucesso = true;
+    header("Location: index.php?salvar=sucesso");
+    exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Contato</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
     <header>
         <div class="tittle">
@@ -71,23 +76,18 @@ if ($_POST) {
     </header>
     <form method="POST" action="" class="form-edit">
         <h1>Editar Contato</h1>
-        
-            <label>Nome:</label>
-            <input type="text" name="nome" value="<?php echo($contato['nome']); ?>" required>
 
-            <label>Telefone:</label>
-            <input type="text" name="telefone" value="<?php echo($contato['telefones']); ?>" required>
+        <label>Nome:</label>
+        <input type="text" name="nome" value="<?php echo trim($contato['nome']); ?>" required>
 
-            <label>Email:</label>
-            <input type="email" name="email" value="<?php echo($contato['emails']); ?>" required>
-        <?php
-        // Exibe a mensagem de sucesso somente quando a variável $sucesso for verdadeira
-        if ($sucesso) {
-            echo '<p style="color: green; font-weight: bold;">Contato editado com sucesso!</p>';
-        }
-        ?>
+        <label>Telefone:</label>
+        <input type="text" name="telefone" value="<?php echo trim($contato['telefones']); ?>" required>
+
+        <label>Email:</label>
+        <input type="text" name="email" value="<?php echo trim($contato['emails']); ?>" required>
 
         <button type="submit" class="salvar">Salvar</button>
     </form>
+
 </body>
 </html>

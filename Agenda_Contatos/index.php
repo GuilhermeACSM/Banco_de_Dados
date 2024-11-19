@@ -114,5 +114,14 @@ $resultado = mysqli_query($link, $query);
             </div>
         </section>
     </main>
+    
+    <?php if (isset($_GET['salvar']) && $_GET['salvar'] === 'sucesso') { ?>
+            <div style="color: green;">
+                <script>
+                    alert('Contato atualizado com sucesso!')
+                    window.history.replaceState(null, null, window.location.pathname);
+                </script>
+            </div>
+        <?php } ?>
 </body>
 </html>
